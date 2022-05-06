@@ -9,6 +9,8 @@ const NavBar = () => {
   const { cartTotalQuantity } = useSelector((state) => state.cart);
   const auth = useSelector((state) => state.auth);
 
+  console.log(auth);
+
   return (
     <nav className="nav-bar">
       <Link to="/">
@@ -32,14 +34,21 @@ const NavBar = () => {
         </div>
       </Link>
       {auth._id ? (
-        <Logout
-          onClick={() => {
-            dispatch(logoutUser(null));
-            toast.warning("Logged out!", { position: "bottom-left" });
-          }}
-        >
-          Logout
-        </Logout>
+        <Links>
+          {auth.isAdmin ? (
+            <div>
+              <Link to="/admin/summary">Admin</Link>
+            </div>
+          ) : null}
+          <div
+            onClick={() => {
+              dispatch(logoutUser(null));
+              toast.warning("Logged out!", { position: "bottom-left" });
+            }}
+          >
+            Logout
+          </div>
+        </Links>
       ) : (
         <AuthLinks>
           <Link to="/login">Login</Link>
@@ -60,7 +69,15 @@ const AuthLinks = styled.div`
   }
 `;
 
-const Logout = styled.div`
+const Links = styled.div`
   color: white;
-  cursor: pointer;
+  display: flex;
+
+  div {
+    cursor: pointer;
+
+    &:last-child {
+      margin-left: 2rem;
+    }
+  }
 `;

@@ -14,6 +14,12 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { loadUser } from "./slices/authSlice";
 import CheckoutSuccess from "./components/CheckoutSuccess";
+import Dashboard from "./components/admin/Dashboard";
+import Products from "./components/admin/Products";
+import Users from "./components/admin/Users";
+import Orders from "./components/admin/Oders";
+import Summary from "./components/admin/Summary";
+import CreateProduct from "./components/admin/CreateProduct";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +40,14 @@ function App() {
             <Route path="/checkout-success" element={<CheckoutSuccess />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/admin" element={<Dashboard />}>
+              <Route path="summary" element={<Summary />} />
+              <Route path="products" element={<Products />}>
+                <Route path="create-product" element={<CreateProduct />} />
+              </Route>
+              <Route path="users" element={<Users />} />
+              <Route path="orders" element={<Orders />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

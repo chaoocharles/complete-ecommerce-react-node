@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { url } from "./api";
 
 const initialState = {
   items: [],
@@ -10,9 +11,8 @@ export const productsFetch = createAsyncThunk(
   "products/productsFetch",
   async () => {
     try {
-      const response = await axios.get(
-        "https://chaoo-online-shop.herokuapp.com/products"
-      );
+      const response = await axios.get(`${url}/products`);
+
       return response.data;
     } catch (error) {
       console.log(error);
