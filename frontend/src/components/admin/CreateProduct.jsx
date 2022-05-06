@@ -1,10 +1,16 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { PrimaryButton } from "./CommonStyled";
-import axios from "axios";
-import { setHeaders, url } from "../../slices/api";
+import { productsCreate } from "../../slices/productsSlice";
 
 const CreateProduct = () => {
+  const dispatch = useDispatch();
+  const { createStatus } = useSelector((state) => state.products);
+
+  const navigate = useNavigate();
+
   const [productImg, setProductImg] = useState("");
   const [brand, setBrand] = useState("");
   const [name, setName] = useState("");
@@ -33,23 +39,15 @@ const CreateProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const res = await axios.post(
-        `${url}/products`,
-        {
-          name,
-          brand,
-          price,
-          desc,
-          image: productImg,
-        },
-        setHeaders()
-      );
-
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(
+      productsCreate({
+        name,
+        brand,
+        price,
+        desc,
+        image: productImg,
+      })
+    );
   };
 
   return (
