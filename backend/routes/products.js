@@ -1,5 +1,5 @@
 const { Product } = require("../models/Product");
-const { isAdmin } = require("../middleware/auth");
+const { auth, isUser, isAdmin } = require("../middleware/auth");
 const cloudinary = require("../utils/cloudinary");
 
 const router = require("express").Router();
@@ -48,15 +48,13 @@ router.delete("/:id", isAdmin, async (req, res) => {
 //GET ALL PRODUCTS
 
 router.get("/", async (req, res) => {
-  const qCategory = req.query.category;
+  const qbrand = req.query.brand;
   try {
     let products;
 
-    if (qCategory) {
+    if (qbrand) {
       products = await Product.find({
-        categories: {
-          $in: [qCategory],
-        },
+        brand: qbrand,
       });
     } else {
       products = await Product.find();

@@ -9,8 +9,6 @@ const CreateProduct = () => {
   const dispatch = useDispatch();
   const { createStatus } = useSelector((state) => state.products);
 
-  const navigate = useNavigate();
-
   const [productImg, setProductImg] = useState("");
   const [brand, setBrand] = useState("");
   const [name, setName] = useState("");
@@ -87,7 +85,9 @@ const CreateProduct = () => {
           required
         />
 
-        <PrimaryButton type="submit">Submit</PrimaryButton>
+        <PrimaryButton type="submit">
+          {createStatus === "pending" ? "Submitting" : "Submit"}
+        </PrimaryButton>
       </StyledForm>
       <ImagePreview>
         {productImg ? (
